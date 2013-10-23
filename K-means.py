@@ -1,3 +1,4 @@
+# programs written by Chia Lun Liu
 import tkinter
 import random
 import time
@@ -20,13 +21,12 @@ class Kmeans:
         self.initGUI()
     def initGUI(self):
         self.top = tkinter.Tk()
-        self.height = self.top.winfo_screenheight()-100 # GUI height
-        self.width = self.top.winfo_screenwidth()-100  # GUI width
+        self.height = self.top.winfo_screenheight()-150 # GUI height
+        self.width = self.top.winfo_screenwidth()-150  # GUI width
         self.top.title("K-means")
         self.top.geometry('+0+0')
         self.C = tkinter.Canvas(self.top, bg="white", height=self.height, width=self.width)
         self.var = tkinter.StringVar()
-        self.var1 = tkinter.StringVar()
         self.topFrame = tkinter.Frame(self.top)
         self.labelNum = tkinter.Label(self.topFrame,text="Point")
         self.entryNum = tkinter.Entry(self.topFrame,bd=5)
@@ -42,11 +42,15 @@ class Kmeans:
         self.button_step.pack(side=tkinter.LEFT)
         self.button_run = tkinter.Button(self.topFrame, text ="run", command = self.run)
         self.button_run.pack(side=tkinter.LEFT)
+        self.button_clear = tkinter.Button(self.topFrame, text ="clear", command = self.clear)
+        self.button_clear.pack(side=tkinter.LEFT)
         self.label = tkinter.Label(self.top,textvariable=self.var)
-        self.var.set(("run :%d" % (self.cnt)))
         self.topFrame.pack()
         self.C.pack()
         self.label.pack()
+    def clear(self):
+        self.finished = 1
+        self.C.delete("all")
     def run(self):
         self.update()
         if( self.finished == 0):
@@ -61,8 +65,10 @@ class Kmeans:
         self.finished = 0
         self.num = n
         self.k = k
+        self.cnt=0
         self.p=[]
         self.gp=[]
+        self.var.set(("run :%d" % (self.cnt)))
         for i in range(0,k):
             colorString = '#%02x%02x%02x' %(random.randint(0,256),random.randint(0,256),random.randint(0,256))
             t = Point()
@@ -119,9 +125,9 @@ class Kmeans:
 
         if changed == 0:
             self.finished = 1
-            self.var.set("(run : %d)" %(self.cnt))
+            self.var.set("run : %d ( complete )" %(self.cnt))
             return
- #       ''' update gp'''
+ #       ''' update gp'''0
         for i in range(0,self.k):
            self.gp[i] = new_gp[i]
         for i in range(0,self.k):
