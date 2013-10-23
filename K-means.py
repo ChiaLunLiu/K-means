@@ -12,8 +12,6 @@ class Point:
         self.color="0x00"
 class Kmeans:
     def __init__(self):
-        self.height = 600 # GUI height
-        self.width = 800  # GUI width
         self.k = 0      #'''number of K'''
         self.p = []     #'''sample points'''
         self.gp = []    #'''points of K'''
@@ -22,7 +20,10 @@ class Kmeans:
         self.initGUI()
     def initGUI(self):
         self.top = tkinter.Tk()
+        self.height = self.top.winfo_screenheight()-100 # GUI height
+        self.width = self.top.winfo_screenwidth()-100  # GUI width
         self.top.title("K-means")
+        self.top.geometry('+0+0')
         self.C = tkinter.Canvas(self.top, bg="white", height=self.height, width=self.width)
         self.var = tkinter.StringVar()
         self.var1 = tkinter.StringVar()
